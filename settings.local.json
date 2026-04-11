@@ -1,0 +1,14 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(gh repo:*)",
+      "Bash(gh api:*)",
+      "Bash(curl -s \"https://developer.android.com/topic/architecture\")",
+      "Skill(update-config)",
+      "Bash(git clone:*)",
+      "Bash(bash customizer.sh com.github.pcha.foodsense.app Product FoodSense)",
+      "Bash(git -C /home/p.cha/.claude status)",
+      "Bash(git -C /home/p.cha/.claude diff HEAD)"
+    ]
+  }
+}

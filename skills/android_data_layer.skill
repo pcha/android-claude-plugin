@@ -1,0 +1,57 @@
+# Android Data Layer Best Practices
+
+## Structure
+- One `Repository` class per **data type** (not per screen or feature)
+  - `MoviesRepository`, `PaymentsRepository`, `UserRepository`
+- One `DataSource` class per **system data source**
+  - Network REST API, Room database, DataStore, file system, GPS, Bluetooth
+
+## Repository responsibilities
+- Expose application data to upper layers via `Flow<T>` or `suspend` functions
+- Centralize all data changes for a given type
+- Resolve conflicts when multiple data sources exist (e.g., cache vs. network)
+- Abstract data sources so the rest of the app doesn't know where data comes from
+- Contain business logic related to data manipulation
+
+## Data source responsibilities
+- Single responsibility: one data source = one external system
+- Bridge between the app and the system for read/write operations
+- Handle caching, retry logic, and persistence at this level
+
+## Create repositories even for a single data source (Strongly Recommended)
+Even if there's only one data source today, wrapping it in a repository:
+- Keeps upper layers decoupled from the data source type
+- Makes testing easy (swap with fake)
+- Makes future additions (e.g., caching) transparent to callers
+
+## UI components must NOT access data sources directly (Strongly Recommended)
+Composables and ViewModels must never directly reference:
+- Room DAOs or databases
+- DataStore or SharedPreferences
+- Firebase SDK
+- GPS / LocationManager
+- Bluetooth / connectivity APIs
+
+All access must go through a repository.
+
+## Offline-first pattern
+- Local database (Room) is the SSOT for app data
+- Network is used to sync/refresh the local database
+- Exposes local data immediately; network sync happens in the background
+- App remains functional without network connectivity
+
+## Models per layer (Recommended in complex apps)
+Map models between layers instead of sharing one class everywhere:
+- Network response → simplified domain model (in data source)
+- Domain model → ViewModel UI state (in repository or use case)
+- This keeps each layer independent and testable
+
+## Naming conventions (Optional)
+| Type | Convention | Example |
+|---|---|---|
+| Repository interface | Noun + Repository | `NewsRepository` |
+| Offline-first impl | OfflineFirst prefix | `OfflineFirstNewsRepository` |
+| In-memory impl | InMemory prefix | `InMemoryUserRepository` |
+| Fake for tests | Fake prefix | `FakeAuthorsRepository` |
+| Data streams | `get{Model}Stream()` | `getAuthorStream(): Flow<Author>` |
+| Lists | Plural model | `getAuthorsStream(): Flow<List<Author>>` |
