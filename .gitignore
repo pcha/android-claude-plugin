@@ -1,6 +1,6 @@
-# Claude local settings (personal overrides, not shareable)
-.claude/settings.local.json
+# Local settings (personal overrides, not shareable)
+settings.local.json
 
-# Claude memory (personal, project-specific)
-.claude/memory/
-.claude/MEMORY.md
+# Memory (personal, project-specific)
+memory/
+MEMORY.md
