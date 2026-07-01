@@ -1,0 +1,14 @@
+{
+  "name": "android-claude-plugin",
+  "displayName": "Android Development",
+  "version": "1.0.0",
+  "description": "Skills and commands for Android development with clean architecture, ViewModels, data layer, DI, and testing.",
+  "author": {
+    "name": "Pablo Cha",
+    "email": "pablo.cha@pcha.dev"
+  },
+  "repository": "https://github.com/pcha/android-claude-plugin",
+  "keywords": ["android", "kotlin", "architecture", "jetpack-compose", "viewmodel", "hilt", "flow", "coroutines", "room", "datastore"],
+  "skills": "./skills/",
+  "commands": "./commands/"
+}
